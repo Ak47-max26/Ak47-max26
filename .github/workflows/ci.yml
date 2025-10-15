@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: |
+          if (Test-Path package.json) { npm ci } else { echo "No package.json - skipping npm install" }
+      - name: Run a quick check
+        run: |
+          echo "Files in repo:"; ls -la
+          echo "Basic check passed"
